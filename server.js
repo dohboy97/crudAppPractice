@@ -2,6 +2,7 @@ console.log('may node be with you')
 
 const express = require('express');
 const bodyParser = require ('body-parser')
+const MongoClient = require('mongodb').MongoClient
 const app = express();
 
 app.use(bodyParser.urlencoded( {extended: true}))
@@ -16,4 +17,8 @@ app.get('/', (req,res) =>{
 
 app.post('/quotes', (req,res) => {
     console.log(req.body)
+})
+
+MongoClient.connect('mongodb-connection-string', (err, client) => {
+    
 })

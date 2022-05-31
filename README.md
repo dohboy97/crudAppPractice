@@ -1,0 +1,1 @@
+A little Star Wars application meant to demonstrate my training and proficiency in using MongoDB as a database and Express/Node.js for the server in order to build full stack CRUD apps. 

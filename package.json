@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/dohboy97/crudAppPractice/issues"
   },
-  "homepage": "https://github.com/dohboy97/crudAppPractice#readme"
+  "homepage": "https://github.com/dohboy97/crudAppPractice#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }

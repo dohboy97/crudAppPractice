@@ -27,7 +27,7 @@ app.get('/', (req,res) =>{
 app.post('/quotes', (req,res) => {
     quotesCollection.insertOne(req.body)
     .then(result => {
-        console.log(result)
+        res.redirect('/')
     })
     .catch (error => console.error(error))
 })

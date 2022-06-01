@@ -14,6 +14,10 @@ MongoClient.connect('mongodb+srv://dohboy1997:JKcfkFnFx5IGRrKN@cluster0.qj4uy.mo
 
     const quotesCollection = db.collection('quotes')
 
+    app.set('view engine', 'ejs')
+
+   
+
 app.use(bodyParser.urlencoded( {extended: true}))
 
 app.listen(3000, function () {
@@ -21,7 +25,13 @@ app.listen(3000, function () {
 })
 
 app.get('/', (req,res) =>{
-    res.sendFile(__dirname + '/index.html')
+    // res.sendFile(__dirname + '/index.html')
+
+    const cursor = db.collection('quotes').find().toArray()
+    .then(results =>{
+        res.render('index.ejs', {quotes: results})
+    })
+    
 })
 
 app.post('/quotes', (req,res) => {

@@ -5,7 +5,13 @@ const bodyParser = require ('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const app = express();
 
-app.use(bodyParser.urlencoded( {extended: true}))
+
+
+MongoClient.connect('mongodb+srv://dohboy1997:JKcfkFnFx5IGRrKN@cluster0.qj4uy.mongodb.net/?retryWrites=true&w=majority')
+.then(client => {
+    // ...
+    const db = client.db('star-wars')
+    app.use(bodyParser.urlencoded( {extended: true}))
 
 app.listen(3000, function () {
     console.log('listening on 3000')
@@ -18,7 +24,5 @@ app.get('/', (req,res) =>{
 app.post('/quotes', (req,res) => {
     console.log(req.body)
 })
-
-MongoClient.connect('mongodb-connection-string', (err, client) => {
-    
-})
+  })
+  .catch(console.error)

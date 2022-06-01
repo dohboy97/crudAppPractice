@@ -11,7 +11,10 @@ MongoClient.connect('mongodb+srv://dohboy1997:JKcfkFnFx5IGRrKN@cluster0.qj4uy.mo
 .then(client => {
     // ...
     const db = client.db('star-wars')
-    app.use(bodyParser.urlencoded( {extended: true}))
+
+    const quotesCollection = db.collection('quotes')
+
+app.use(bodyParser.urlencoded( {extended: true}))
 
 app.listen(3000, function () {
     console.log('listening on 3000')
@@ -22,7 +25,11 @@ app.get('/', (req,res) =>{
 })
 
 app.post('/quotes', (req,res) => {
-    console.log(req.body)
+    quotesCollection.insertOne(req.body)
+    .then(result => {
+        console.log(result)
+    })
+    .catch (error => console.error(error))
 })
   })
   .catch(console.error)

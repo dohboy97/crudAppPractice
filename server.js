@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require ('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const app = express();
-
+app.use(express.static('public'))
 
 
 MongoClient.connect('mongodb+srv://dohboy1997:JKcfkFnFx5IGRrKN@cluster0.qj4uy.mongodb.net/?retryWrites=true&w=majority')

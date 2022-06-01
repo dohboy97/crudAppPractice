@@ -4,18 +4,21 @@ const express = require('express');
 const bodyParser = require ('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const app = express();
-app.use(express.static('public'))
 
 
-MongoClient.connect('mongodb+srv://dohboy1997:JKcfkFnFx5IGRrKN@cluster0.qj4uy.mongodb.net/?retryWrites=true&w=majority')
+
+MongoClient.connect('mongodb+srv://qj4uy.mongodb.net/?retryWrites=true&w=majority')
 .then(client => {
     // ...
     const db = client.db('star-wars')
 
     const quotesCollection = db.collection('quotes')
 
-    app.set('view engine', 'ejs')
+    
 
+    app.set('view engine', 'ejs')
+    app.use(express.static('public'))
+    app.use(bodyParser.json())
    
 
 app.use(bodyParser.urlencoded( {extended: true}))
@@ -41,5 +44,29 @@ app.post('/quotes', (req,res) => {
     })
     .catch (error => console.error(error))
 })
+
+app.put('/quotes', (req, res) => {
+    quotesCollection.findOneAndUpdate(
+        { name: 'Yoda' },
+        {
+          $set: {
+            name: req.body.name,
+            quote: req.body.quote
+          }
+        },
+        {
+          upsert: true
+        }
+      )
+        .then(result => {/* ... */})
+        .catch(error => console.error(error))
+    console.log(req.body)
+    quotesCollection.findOneAndUpdate(/* ... */)
+    .then(result => {
+      console.log(result)
+     })
+    .catch(error => console.error(error))
+  })
+
   })
   .catch(console.error)

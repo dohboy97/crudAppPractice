@@ -17,11 +17,12 @@ MongoClient.connect('mongodb+srv://qj4uy.mongodb.net/?retryWrites=true&w=majorit
     
 
     app.set('view engine', 'ejs')
+    app.use(bodyParser.urlencoded( {extended: true}))
     app.use(express.static('public'))
     app.use(bodyParser.json())
    
 
-app.use(bodyParser.urlencoded( {extended: true}))
+
 
 app.listen(3000, function () {
     console.log('listening on 3000')
@@ -47,25 +48,32 @@ app.post('/quotes', (req,res) => {
 
 app.put('/quotes', (req, res) => {
     quotesCollection.findOneAndUpdate(
-        { name: 'Yoda' },
-        {
-          $set: {
-            name: req.body.name,
-            quote: req.body.quote
-          }
-        },
-        {
-          upsert: true
+      { name: 'Yoda' },
+      {
+        $set: {
+          name: req.body.name,
+          quote: req.body.quote
         }
-      )
-        .then(result => {/* ... */})
-        .catch(error => console.error(error))
-    console.log(req.body)
-    quotesCollection.findOneAndUpdate(/* ... */)
-    .then(result => {
-      console.log(result)
-     })
-    .catch(error => console.error(error))
+      },
+      {
+        upsert: true
+      }
+    )
+      .then(result => res.json('Success'))
+      .catch(error => console.error(error))
+  })
+
+  app.delete('/quotes', (req, res) => {
+    quotesCollection.deleteOne(
+      { name: req.body.name }
+    )
+      .then(result => {
+        if (result.deletedCount === 0) {
+          return res.json('No quote to delete')
+        }
+        res.json('Deleted Darth Vadar\'s quote')
+      })
+      .catch(error => console.error(error))
   })
 
   })
